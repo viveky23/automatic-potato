@@ -1,0 +1,9 @@
+\textcolor{red}{\textbf{Abstract:}  }
+
+\section*{Supervised Learning}
+
+ During training, the machine is shown an image and produces an output in the form of a vector of scores, one for each category. We want the desired category to have the highest score of all categories. The machine then modifies its internal adjustable parameters to decrease the error. It does that by calculating a gradient vector which tells us how the error would behave if a weight was increased by a small amount. This vector is calculated for each weight and a small step is taken in the direction opposite to this gradient vector to adjust the weights.\\
+ 
+ The negative gradient vector gives us the direction of the steepest descent approaching minima. In SGD we do the same using minibatches of training cases until the average of the objective function stops decreasing. This gives us a noisy estimate of the average gradient over all examples.
+ 
+ Linear classifiers fell out of repute because they can break the input space into very simple regions and require very good feature extractors to be able to solve the selectivity-invariance dilemma (producing representations which are selective of the correct features and invariant towards aspects such as lighting and pose in case of pictures.
