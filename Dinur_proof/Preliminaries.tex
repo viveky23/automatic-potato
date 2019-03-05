@@ -30,11 +30,41 @@ A sound verifier is one which can not be tricked into accepting a false positive
 
 We require proof $y$ to be readable in polynomial time by the verifier $V$. If y is short saying that V is efficient in x is the same as saying that V is efficient in x and y (because the size of y is bounded by a fixed polynomial in the size of x).
 
-\subsection{P \subset NP}
-As we have \textbf{P = efficiently solvable} and \textbf{NP = efficiently verifiable}, we can say that the set of $P = NP$ if efficienty solvable problems are efficiently verifiable. However, we can easily state that $P \subset NP$ as any problem that is solvable in polynomial time can be eaily verifiable in polynomial time. Suppose problem $p_1$ is in $P$ and you want to show that $p_1$ is also in $NP$.
+\subsection{P \subseteq NP}
+As we have \textbf{P = efficiently solvable} and \textbf{NP = efficiently verifiable}, we can say that the set of $P = NP$ if efficiently solvable problems are efficiently verifiable. However, we can easily state that $P \subseteq NP$ as any problem that is solvable in polynomial time can be easily verifiable in polynomial time. Suppose problem $p_1$ is in $P$ and you want to show that $p_1$ is also in $NP$.
 
 Given a particular problem instance $i$ of $p_i$ and a candidate solution $c_i$, the following algorithm will decide if $c_i$ is really the correct solution:
 \begin{enumerate}
     \item Since $p_1$ is in $P$, we have a polynomial time algorithm that can be used to determine the answer for $p_i$. Run this algorithm on $p_i$ and get a yes or no answer.
     \item Returns this as the answer.
+\end{enumerate}
+
+\subsection{Brute-Force algorithms for NP}
+The best algorithms we know of for solving an arbitrary problem in $NP$ are brute-force/exhaustive-search algorithms. Pick an efficient verifier for the problem (it has an efficient verifier by our assumption that it is in $NP$) and check all possible proofs once by one. If the verifier accepts one of them then the answer is $YES$. Otherwise the answer is $NO$.
+
+Note that the brute-force algorithm runs in worst-case exponential time. The size of the proofs is polynomial in the size of input. If the size of the proofs is m then there are 2m possible proofs. Checking each of them will take polynomial time by the verifier. So in total the brute-force algorithm takes exponential time.
+
+This shows that any $NP$ problem can be solved in exponential time, i.e. $NP \subseteq ExpTime$. Moreover the brute-force algorithm will use only a polynomial amount of space, i.e. $NP \subseteq PSpace$. Stating that a problem is in NP does not mean a problem is difficult to solve, it just means that it is easy to verify, it is an upper bound on the difficulty of solving the problem, and many NP problems are easy to solve since $P \subseteq NP$.
+
+\subsection{Reductions}
+Intuitively, when we reduce a problem $A$ to a problem $B$, we mean that if we know how to solve $B$, this somehow induces a solution to $A$ (the "somehow" is the reduction). Taking the contra-positive, this also means that if we know that $A$ is unsolvable (according to some fitting notion of unsolvability), then $B$ is also unsolvable.
+
+A mapping reduction from $A$ to $B$ is a computable function $f:\Sigma^*\to \Sigma^*$, such that for all $x\in \Sigma^*$ it holds that $x\in A$ iff $f(x)\in B$. The intuition behind this definition is that, assuming we have an algorithm that solves $B$, then we can solve $A$. Indeed, given an input for $A$, we use the reduction $f$ to transform it to an input for $B$, and solve $B$ using our algorithm. The "iff" property of the reduction ensures that the answer we get on $B$ induces an answer for $A$.
+
+As a concrete example, let's consider the halting problem: given a TM $M$ and input $w$, decide whether $M$ halts in its run on $w$.
+We want to reduce $A_{TM}$ to the halting problem. That is, we want to show that if we could solve the halting problem, then $A_{TM}$ is also solvable. So what we need to show is a function that takes an input $M,w$ for $A_{TM}$, and transforms it into an input $M',w'$ for the halting problem, such that the $M$ accepts $w$ iff $M'$ halts on $w'$.
+
+We do this as follows. Given input $M,w$, construct $M'$ to be the machine that behaves exactly like $M$, except that we replace the rejecting state of $M$ with a self-loop (that never halts). We then output $M',w$. Now, it is not hard to prove that $M$ accepts $w$ iff $M'$ halts on $w$, and thus we have a reduction. Also note that this reduction is computable, since computing $M'$ from $M$ is a simple matter of changing the behavior of a state.
+
+Formally we can state that aproblem has a \textbf{black-box reduction} (a.k.a. \textbf{oracle reduction}, \textbf{Turing reduction}) to problem $O$ and write $Q \leq_T O$ iff:
+\begin{enumerate}
+    \item there is an algorithm $A$ such that for all inputs $x$,
+    \item $Q(x) = A^O(x)$.
+\end{enumerate}
+
+Or, if there exists an algorithm $A$ which using oracle $O$ as a subroutine can solve the problem $Q$. A reduction algorithm $A$ which runs in polynomial time is polynomial time black box reducible or \textbf{Cook reducible} and 
+write $Q\leq^\mathsf{P}_T O$ For a given input $x$,  if we generate $y$ using some polynomial time computation where $y$ is an instance of the problem that will be solvable by the oracle whose answer it then returns to us. We are allowed to ask the oracle one question and it gives a $YES/NO$ answer. It can be formally We said that problem $Q$ is many-one reducible to problem $O$ and $Q \leq_m O$ iff:
+\begin{enumerate}
+    \item there is an algorithm $A$ such that for all inputs $x$,  
+    \item $Q(x) = O(A(x))$.
 \end{enumerate}
