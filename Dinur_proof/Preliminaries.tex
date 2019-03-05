@@ -1,9 +1,31 @@
-\textcolor{red}{\textbf{Abstract:}  }
+\textcolor{red}{\textbf{Abstract:} These are some basic notations and concepts which are used throughout this compilation.}
 
-\section*{Supervised Learning}
+\section{Computational Complexity: P, NP, Proofs and Optimization}
+We encounter various types of computational problems. The easier set of problems are \textbf{decision problems}, i.e. problems with an answer of the form $/{YES, NO/}$. Most other types of computational problems can be reduced to similar questions involving decision problems. A decision problem can be identified by the subset of inputs that have answer $YES$ and we can thus denote it by $x \in P$ instead of $P(x) = YES$ and similarly $x \notin P$ in place of $P(x) = NO$. This reduces decision problems to a set of \textbf{membership queries} in a given set. We refer to an answer $YES$ to an input as \textbf{accepting} the input and an answer $NO$ as \textbf{rejecting} the same input.
 
- During training, the machine is shown an image and produces an output in the form of a vector of scores, one for each category. We want the desired category to have the highest score of all categories. The machine then modifies its internal adjustable parameters to decrease the error. It does that by calculating a gradient vector which tells us how the error would behave if a weight was increased by a small amount. This vector is calculated for each weight and a small step is taken in the direction opposite to this gradient vector to adjust the weights.\\
+ \subsection{PolyTime Complexity Class}
+ The poly-time complexity class consists of all the problems that have  a solution time that can be decided as  a polynomial function of of the size of the problem by a deterministic algorithm. We assume that \textbf{efficient algorithms} are those which use at most \textbf{polynomial} amount of computational resources with the main resource we care about is the worst-case \textbf{running time} of the algorithm with respect to it's input size. Class P (Polynomial time) problems can be solved in $O(N^C)$ time where C is any constant and N in s the input size of the problem. A problem belonging to class P can be solved in number of steps bounded by some power of the problem's size. The above assumption about the efficiency of polynomial time algorithms is known as \textbf{Cobham's thesis}. We can formally define polynomial time complexity class as follows:
  
- The negative gradient vector gives us the direction of the steepest descent approaching minima. In SGD we do the same using minibatches of training cases until the average of the objective function stops decreasing. This gives us a noisy estimate of the average gradient over all examples.
+ There exists an efficient algorithm $\textbf{A}$ such that for all inputs $x$:
+ \begin{enumerate}
+     \item if $P(x) = YES$ then $A(x) = YES$,
+     \item if $P(x) = NO$ then $A(x) = NO$.
+ \end{enumerate}
  
- Linear classifiers fell out of repute because they can break the input space into very simple regions and require very good feature extractors to be able to solve the selectivity-invariance dilemma (producing representations which are selective of the correct features and invariant towards aspects such as lighting and pose in case of pictures.
+ \subsection{Non-PolyTime Complexity Class}
+ The non-polytime complexity class consists of all the problems that require a non-deterministic algorithm to be solvable in polynomial time. Given a solution to the problem, however, we can determine whether it is correct or not in polynomial time. \textbf{NP is the class of problems which have efficient verifiers} i.e. there is a polynomial time algorithm that can verify if a given solution is correct. We can formally define non-polynomial time complexity class as follows:
+ 
+There exists an efficient algorithm $\textbf{V}$ or the verifier such that for all inputs $x$:
+\begin{enumerate}
+    \item if $Q(x) = YES$ then there is a proof $y$ such that $V(x,y) = YES$
+    \item if $Q(x) = NO$ then for all proofs $y$, $V(x,y) = NO$
+\end{enumerate}
+
+A sound verifier is one which can not be tricked into accepting a false positive proof as correct. It does not accept any proof wen the answer is $NO$. On the same note, a verifier is complete if it can accept atleast one proof when the answer is $YES$. The verifier $V$ gets two inputs:
+
+\begin{enumerate}
+    \item $x$: the original input for $Q$, and
+    \item $y$: a suggested proof for $Q(x) = YES$
+\end{enumerate}
+
+We require proof $y$ to be readable in polynomial time by the verifier $V$. If y is short saying that V is efficient in x is the same as saying that V is efficient in x and y (because the size of y is bounded by a fixed polynomial in the size of x).
