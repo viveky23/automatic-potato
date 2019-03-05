@@ -29,3 +29,12 @@ A sound verifier is one which can not be tricked into accepting a false positive
 \end{enumerate}
 
 We require proof $y$ to be readable in polynomial time by the verifier $V$. If y is short saying that V is efficient in x is the same as saying that V is efficient in x and y (because the size of y is bounded by a fixed polynomial in the size of x).
+
+\subsection{P \subset NP}
+As we have \textbf{P = efficiently solvable} and \textbf{NP = efficiently verifiable}, we can say that the set of $P = NP$ if efficienty solvable problems are efficiently verifiable. However, we can easily state that $P \subset NP$ as any problem that is solvable in polynomial time can be eaily verifiable in polynomial time. Suppose problem $p_1$ is in $P$ and you want to show that $p_1$ is also in $NP$.
+
+Given a particular problem instance $i$ of $p_i$ and a candidate solution $c_i$, the following algorithm will decide if $c_i$ is really the correct solution:
+\begin{enumerate}
+    \item Since $p_1$ is in $P$, we have a polynomial time algorithm that can be used to determine the answer for $p_i$. Run this algorithm on $p_i$ and get a yes or no answer.
+    \item Returns this as the answer.
+\end{enumerate}
