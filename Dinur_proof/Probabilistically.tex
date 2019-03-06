@@ -20,7 +20,11 @@ Instead of measuring the time complexity of your algorithm, we measure the query
 
 \textbf{Definition 2} \textit{For positive constant $0 \leq s \leq 1$, we can say that an (r,q,a)-restricted PCP verifier v accepts a language $L \subseteq \{0,1\}^*$ with soundness s if for every $x \in \{0,1\}^n the following hold:$}
 
-\textbf{Completeness}\textit{If $x \in L then there exists$}
+\textbf{Completeness} \textit{If $x \in L$ then there exists a $\pi : \mathbb{Z}^+ \rightarrow \{0,1\}^{a(n)}$ such that for every $R$, $V^{\pi}(x:R) = 1$}
+
+\textbf{Soundness} \textit{If $x \notin L$ then for every $\pi : \mathbb{Z}^+ \rightarrow \{0,1\}^{a(n)}$} it is the case that $Pr_R[\pi : \mathbb{Z}^+ \rightarrow \{0,1\}^{a(n)}] \leq s$
+
+\textit{By $PCP_s[r,q,a]$ we denote a class of all languages L such that there exists an (r,q,a) restricted PCP verifier accepting L with soundness s.} The above definition is called a non-adaptive verifier. An adaptive verifier accesses y one bit at a time and may adapt its computation according to the read bit. In our definition V has a fixed predicate , and simply outputs that predicate in the final step. The length of the proof $\pi$ is at most $2^rq$ since there are $2r$ possible random strings of length $r$ and, $q$ possible accesses for each string. Therefore if $r$ is $c log n(n = |x|)$ for some constant $c$, the proof $y$ is of length at most $n^cq$, i.e. polynomial in n.
 
 The PCP theorem gives a PCP for 3SAT with $q(n) = O(\log n)$ and $r(n) = O(1)$. That means that given a 3CNF, we can come construct a new CNF of length $O(2^{q(n)}) = n^{O(1)}$ using the construction outlined in the preceding paragraph such that (i) if the original 3CNF formula is satisfiable, so is the new one, (ii) otherwise, at most $1-\epsilon$ fraction of the clauses can ever be satisfied in the new CNF. That gives a hardness of approximation result for 3SAT. 
 
