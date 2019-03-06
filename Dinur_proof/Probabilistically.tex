@@ -26,6 +26,17 @@ Instead of measuring the time complexity of your algorithm, we measure the query
 
 \textit{By $PCP_s[r,q,a]$ we denote a class of all languages L such that there exists an (r,q,a) restricted PCP verifier accepting L with soundness s.} The above definition is called a non-adaptive verifier. An adaptive verifier accesses y one bit at a time and may adapt its computation according to the read bit. In our definition V has a fixed predicate , and simply outputs that predicate in the final step. The length of the proof $\pi$ is at most $2^rq$ since there are $2r$ possible random strings of length $r$ and, $q$ possible accesses for each string. Therefore if $r$ is $c log n(n = |x|)$ for some constant $c$, the proof $y$ is of length at most $n^cq$, i.e. polynomial in n.
 
+The soundness error can, as usual, be reduced by repetition. For exponentially-small error, this does not affect the class PCP; however, such repetition affects the parameters r, q. (E.g., if $L \in PCP(r, q)$ by the above definition then $L \in PCP^∗(|x|.r, |x|.q)$ if by $PCP^∗$ we mean that we require soundness error $2^{−|x|}$.)
+
+\textbf{Theorem 1} \textit{The PCP Theorem: There exists two constant numbers c1 and c2 such that $NP = PCP[c_1 log n, c_2]$. For simplicity, $NP = PCP[O(log n), O(1)]$.}
+
+\textbf{Theorem 2} Hastad (1997) Theorem [2] For every constant $\epsilon, \delta > 0, NP = PCP_{1 - \epsilon,1/2+\delta} [O(log n), 3]$ 
+
+That is, for every constant $\epsilon, \delta > 0$, there is a poly-size PCP for NP that reads just three random bits and test their XOR. Its completeness is $1 - \epsilon$ and its soundness is $1/2 + \epsilon$. This result has imperfect completeness. However, if one is willing to allow an adaptive three-bit-querying verifier, i.e. the verifier $V$ does not have to pick the three bits in advance but can base what bit it reads next on what it’s seen so far, then one can get completeness 1. That is, $NP = PCP_{1,1/2+\delta}[O(log n), O(1)]$. This result is due to Guruswami, Lewin,
+Sudan, and Trevisan [REFERENCE].
+
+\section{PCPs and Approximations}
+
 The PCP theorem gives a PCP for 3SAT with $q(n) = O(\log n)$ and $r(n) = O(1)$. That means that given a 3CNF, we can come construct a new CNF of length $O(2^{q(n)}) = n^{O(1)}$ using the construction outlined in the preceding paragraph such that (i) if the original 3CNF formula is satisfiable, so is the new one, (ii) otherwise, at most $1-\epsilon$ fraction of the clauses can ever be satisfied in the new CNF. That gives a hardness of approximation result for 3SAT. 
 
 Using Raz's parallel repetition theorem, Håstad obtained a construct in which in case (ii), at most $7/8+\epsilon$ of the clauses can be satisfied, thus obtaining an optimal inapproximability result. (It's optimal since a random assignment satisfies $7/8$ of the clauses; this algorithm can be derandomized using the method of conditional expectations.)
