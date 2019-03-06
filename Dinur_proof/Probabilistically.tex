@@ -16,7 +16,7 @@ black-box access to some function $f$. You have to answer some question about $f
 
 Instead of measuring the time complexity of your algorithm, we measure the query complexity: the number of queries it makes to f. A probabilistic algorithm $A(·, ·)$ is an algorithm that takes two inputs $x$ and $r$, where $x$ is an instance of some problem that we want to solve, and $r$ is the output of a random source. A random source is an idealized device that outputs a sequence of bits that are uniformly and independently distributed. The output of a probabilistic oracle algorithm $A$ on input $x$, random string $R \in \{0,1\}*$ and access to oracle $O$ will be denoted as $A^O(x,R)$.
 
-\textbf{Definition 1} \textit{For functions r,q,a : $\mathbb{Z}^+ \rightarrow \mathbb{Z}^+$}
+\textbf{Definition 1} \textit{For functions r,q,a : $\mathbb{Z}^+ \rightarrow \mathbb{Z}^+$ an (r,q,a) restricted PCP verifier is a probabbilistic oracle algorithm V that on input $x \in \{0,1\}^n$ expects a random string $R \in \{0,1\}^{r(n)}$ and queries an oracle $\pi : \mathbb{Z}^+ \rightarrow \{0,1\}^{a(n)}$ at most q(n) times and computes a "Boolean verdict" $V^{\pi}(x,R) \in \{0,1\}$.}
 
 The PCP theorem gives a PCP for 3SAT with $q(n) = O(\log n)$ and $r(n) = O(1)$. That means that given a 3CNF, we can come construct a new CNF of length $O(2^{q(n)}) = n^{O(1)}$ using the construction outlined in the preceding paragraph such that (i) if the original 3CNF formula is satisfiable, so is the new one, (ii) otherwise, at most $1-\epsilon$ fraction of the clauses can ever be satisfied in the new CNF. That gives a hardness of approximation result for 3SAT. 
 
