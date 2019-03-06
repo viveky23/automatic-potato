@@ -1,0 +1,17 @@
+\textcolor{red}{\textbf{Abstract:} }
+
+In order to verify some property using PCP, the prover needs to present a proof $P$ which is \textbf{easily testable}. Testing can be done by querying the proof at $q(n)$ points where $q(n)$ is a small number. PCP needs to satisfy the following properties: 
+\begin{enumerate}
+    \item If the property actually holds, the verifier should always (or almost always) accept.
+    \item If the property doesn't hold, then the verifier would notice with some constant probability.
+\end{enumerate}
+
+To account for lengthy proofs, as the verifier will only be looking at a small number- $q(n)$ points, randomness in choosing points is encouraged so as to make it harder to fool the verifier. The verifier chooses $r(n)$ random coins, and based on them queries the proof at $q(n)$ points. Then she applies a test which always succeeds in YES instances (the property holds), but fails with constant probability (over the coin tosses) in NO instances (the property doesn't hold). Since there are $r(n)$ coins, there are $2^{r(n)}$ different outcomes for the coins, and so the verifier in total queries the proof in at most $2^{r(n)}q(n)$ different places.
+
+What's the point of a PCP? We can encode the verifier as a CNF whose variables are the bits of the proof: for each of the $2^{r(n)}$ coin tosses, there are clauses encoding that the $q(n)$ bits sampled pass the verifier's test. If it's a YES instance, then this CNF is satisfiable. If it's a NO instance, then the verifier fails with some constant probability, and so a constant fraction of the clauses in the CNF are always unsatisfied.
+
+The PCP theorem gives a PCP for 3SAT with $q(n) = O(\log n)$ and $r(n) = O(1)$. That means that given a 3CNF, we can come construct a new CNF of length $O(2^{q(n)}) = n^{O(1)}$ using the construction outlined in the preceding paragraph such that (i) if the original 3CNF formula is satisfiable, so is the new one, (ii) otherwise, at most $1-\epsilon$ fraction of the clauses can ever be satisfied in the new CNF. That gives a hardness of approximation result for 3SAT. 
+
+Using Raz's parallel repetition theorem, Håstad obtained a construct in which in case (ii), at most $7/8+\epsilon$ of the clauses can be satisfied, thus obtaining an optimal inapproximability result. (It's optimal since a random assignment satisfies $7/8$ of the clauses; this algorithm can be derandomized using the method of conditional expectations.)
+ \section{PolyTime Complexity Class}
+ 
