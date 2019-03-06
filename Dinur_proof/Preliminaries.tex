@@ -1,10 +1,9 @@
-\textcolor{red}{\textbf{Abstract:} These are some basic notations and concepts which are used throughout this compilation. We encounter various types of computational problems. The easier set of problems are \textbf{decision problems}, i.e. problems with an answer of the form $/{YES, NO/}$. Most other types of computational problems can be reduced to similar questions involving decision problems. A decision problem can be identified by the subset of inputs that have answer $YES$ and we can thus denote it by $x \in P$ instead of $P(x) = YES$ and similarly $x \notin P$ in place of $P(x) = NO$. This reduces decision problems to a set of \textbf{membership queries} in a given set. We refer to an answer $YES$ to an input as \textbf{accepting} the input and an answer $NO$ as \textbf{rejecting} the same input.}
-
- \section{PolyTime Complexity Class}
+\textcolor{red}{\textbf{Abstract:} We encounter various types of computational problems. The easier set of problems are \textbf{decision problems}, i.e. problems with an answer of the form $/{YES, NO/}$. Most other types of computational problems can be reduced to similar questions involving decision problems. A decision problem can be identified by the subset of inputs that have answer $YES$ and we can thus denote it by $x \in P$ instead of $P(x) = YES$ and similarly $x \notin P$ in place of $P(x) = NO$. This reduces decision problems to a set of \textbf{membership queries} in a given set. We refer to an answer $YES$ to an input as \textbf{accepting} the input and an answer $NO$ as \textbf{rejecting} the same input.}
+\section{PolyTime Complexity Class}
  The poly-time complexity class consists of all the problems that have  a solution time that can be decided as  a polynomial function of of the size of the problem by a deterministic algorithm. We assume that \textbf{efficient algorithms} are those which use at most \textbf{polynomial} amount of computational resources with the main resource we care about is the worst-case \textbf{running time} of the algorithm with respect to it's input size. Class P (Polynomial time) problems can be solved in $O(N^C)$ time where C is any constant and N in s the input size of the problem. A problem belonging to class P can be solved in number of steps bounded by some power of the problem's size. The above assumption about the efficiency of polynomial time algorithms is known as \textbf{Cobham's thesis}. We can formally define polynomial time complexity class as follows:
  
  There exists an efficient algorithm $\textbf{A}$ such that for all inputs $x$:
- \begin{enumerate}
+ \begin{enumerate}[nolistsep]
      \item if $P(x) = YES$ then $A(x) = YES$,
      \item if $P(x) = NO$ then $A(x) = NO$.
  \end{enumerate}
@@ -13,14 +12,14 @@
  The non-polytime complexity class consists of all the problems that require a non-deterministic algorithm to be solvable in polynomial time. Given a solution to the problem, however, we can determine whether it is correct or not in polynomial time. \textbf{NP is the class of problems which have efficient verifiers} i.e. there is a polynomial time algorithm that can verify if a given solution is correct. We can formally define non-polynomial time complexity class as follows:
  
 There exists an efficient algorithm $\textbf{V}$ or the verifier such that for all inputs $x$:
-\begin{enumerate}
+\begin{enumerate}[nolistsep]
     \item if $Q(x) = YES$ then there is a proof $y$ such that $V(x,y) = YES$
     \item if $Q(x) = NO$ then for all proofs $y$, $V(x,y) = NO$
 \end{enumerate}
 
 A sound verifier is one which can not be tricked into accepting a false positive proof as correct. It does not accept any proof wen the answer is $NO$. On the same note, a verifier is complete if it can accept atleast one proof when the answer is $YES$. The verifier $V$ gets two inputs:
 
-\begin{enumerate}
+\begin{enumerate}[nolistsep]
     \item $x$: the original input for $Q$, and
     \item $y$: a suggested proof for $Q(x) = YES$
 \end{enumerate}
@@ -50,14 +49,14 @@ We want to reduce $A_{TM}$ to the halting problem. That is, we want to show that
 We do this as follows. Given input $M,w$, construct $M'$ to be the machine that behaves exactly like $M$, except that we replace the rejecting state of $M$ with a self-loop (that never halts). We then output $M',w$. Now, it is not hard to prove that $M$ accepts $w$ iff $M'$ halts on $w$, and thus we have a reduction. Also note that this reduction is computable, since computing $M'$ from $M$ is a simple matter of changing the behavior of a state.
 
 Formally we can state that aproblem has a \textbf{black-box reduction} (a.k.a. \textbf{oracle reduction}, \textbf{Turing reduction}) to problem $O$ and write $Q \leq_T O$ iff:
-\begin{enumerate}
+\begin{enumerate}[nolistsep]
     \item there is an algorithm $A$ such that for all inputs $x$,
     \item $Q(x) = A^O(x)$.
 \end{enumerate}
 
 Or, if there exists an algorithm $A$ which using oracle $O$ as a subroutine can solve the problem $Q$. A reduction algorithm $A$ which runs in polynomial time is polynomial time black box reducible or \textbf{Cook reducible} and 
 write $Q\leq^\mathsf{P}_T O$ For a given input $x$,  if we generate $y$ using some polynomial time computation where $y$ is an instance of the problem that will be solvable by the oracle whose answer it then returns to us. We are allowed to ask the oracle one question and it gives a $YES/NO$ answer. It can be formally We said that problem $Q$ is many-one reducible to problem $O$ and $Q \leq_m O$ iff:
-\begin{enumerate}
+\begin{enumerate}[nolistsep]
     \item there is an algorithm $A$ such that for all inputs $x$,  
     \item $Q(x) = O(A(x))$.
 \end{enumerate}

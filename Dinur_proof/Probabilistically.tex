@@ -1,7 +1,7 @@
 \textcolor{red}{\textbf{Abstract:} }
 
 In order to verify some property using PCP, the prover needs to present a proof $P$ which is \textbf{easily testable}. Testing can be done by querying the proof at $q(n)$ points where $q(n)$ is a small number. PCP needs to satisfy the following properties: 
-\begin{enumerate}
+\begin{enumerate}[nolistsep]
     \item If the property actually holds, the verifier should always (or almost always) accept.
     \item If the property doesn't hold, then the verifier would notice with some constant probability.
 \end{enumerate}
@@ -10,8 +10,14 @@ To account for lengthy proofs, as the verifier will only be looking at a small n
 
 We use PCP because we can encode the verifier as a CNF whose variables are bits of the proof, for all $2^{r(n)}$ coin tosses, there exist clauses encoding that the $q(n)$ bits that were sampled, do pass the verifier's test. In case of a positive, $YES$ instance the CNF is always satisfiable and in case of a negative, $NO$ instance we see failure with some constant probability leading to a fraction of the clauses always being unsatisfied. 
 
+\section{Basics}
+We describe a verifier such that for any yes instance of $X$, there exists a certificate that the verifier will accept, and for any no instance of $X$, no such certificate exists. The running time of the verifier (and hence the size of the certificate) must be polynomial. This is formally represented as a function $V: \{0,1\}* \times \{0,1\}* \rightarrow \{0,1\}$ where, $V(T,\pi) = 1$ implies $\pi$ is the proof of assertion $T$, making it a proof. Classical verifiers/algorithms are enhanced by giving them access to random strings and oracles. Oracles will be functions $O: Q \rightarrow A$ with $Q$ being a countable set and $A$ being a finite set. In the query model, you are given
+black-box access to some function $f$. You have to answer some question about $f$. 
+
+Instead of measuring the time complexity of your algorithm, we measure the query complexity: the number of queries it makes to f. A probabilistic algorithm $A(·, ·)$ is an algorithm that takes two inputs $x$ and $r$, where $x$ is an instance of some problem that we want to solve, and $r$ is the output of a random source. A random source is an idealized device that outputs a sequence of bits that are uniformly and independently distributed. The output of a probabilistic oracle algorithm $A$ on input $x$, random string $R \in \{0,1\}*$ and access to oracle $O$ will be denoted as $A^O(x,R)$.
+
+\textbf{Definition 1} \textit{For functions r,q,a : $\mathbb{Z}^+ \rightarrow \mathbb{Z}^+$}
+
 The PCP theorem gives a PCP for 3SAT with $q(n) = O(\log n)$ and $r(n) = O(1)$. That means that given a 3CNF, we can come construct a new CNF of length $O(2^{q(n)}) = n^{O(1)}$ using the construction outlined in the preceding paragraph such that (i) if the original 3CNF formula is satisfiable, so is the new one, (ii) otherwise, at most $1-\epsilon$ fraction of the clauses can ever be satisfied in the new CNF. That gives a hardness of approximation result for 3SAT. 
 
 Using Raz's parallel repetition theorem, Håstad obtained a construct in which in case (ii), at most $7/8+\epsilon$ of the clauses can be satisfied, thus obtaining an optimal inapproximability result. (It's optimal since a random assignment satisfies $7/8$ of the clauses; this algorithm can be derandomized using the method of conditional expectations.)
- \section{PolyTime Complexity Class}
- 
