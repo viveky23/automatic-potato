@@ -18,6 +18,10 @@ Instead of measuring the time complexity of your algorithm, we measure the query
 
 \textbf{Definition 1} \textit{For functions r,q,a : $\mathbb{Z}^+ \rightarrow \mathbb{Z}^+$ an (r,q,a) restricted PCP verifier is a probabbilistic oracle algorithm V that on input $x \in \{0,1\}^n$ expects a random string $R \in \{0,1\}^{r(n)}$ and queries an oracle $\pi : \mathbb{Z}^+ \rightarrow \{0,1\}^{a(n)}$ at most q(n) times and computes a "Boolean verdict" $V^{\pi}(x,R) \in \{0,1\}$.}
 
+\textbf{Definition 2} \textit{For positive constant $0 \leq s \leq 1$, we can say that an (r,q,a)-restricted PCP verifier v accepts a language $L \subseteq \{0,1\}^*$ with soundness s if for every $x \in \{0,1\}^n the following hold:$}
+
+\textbf{Completeness}\textit{If $x \in L then there exists$}
+
 The PCP theorem gives a PCP for 3SAT with $q(n) = O(\log n)$ and $r(n) = O(1)$. That means that given a 3CNF, we can come construct a new CNF of length $O(2^{q(n)}) = n^{O(1)}$ using the construction outlined in the preceding paragraph such that (i) if the original 3CNF formula is satisfiable, so is the new one, (ii) otherwise, at most $1-\epsilon$ fraction of the clauses can ever be satisfied in the new CNF. That gives a hardness of approximation result for 3SAT. 
 
 Using Raz's parallel repetition theorem, Håstad obtained a construct in which in case (ii), at most $7/8+\epsilon$ of the clauses can be satisfied, thus obtaining an optimal inapproximability result. (It's optimal since a random assignment satisfies $7/8$ of the clauses; this algorithm can be derandomized using the method of conditional expectations.)
