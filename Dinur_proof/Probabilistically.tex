@@ -10,6 +10,8 @@ To account for lengthy proofs, as the verifier will only be looking at a small n
 
 We use PCP because we can encode the verifier as a CNF whose variables are bits of the proof, for all $2^{r(n)}$ coin tosses, there exist clauses encoding that the $q(n)$ bits that were sampled, do pass the verifier's test. In case of a positive, $YES$ instance the CNF is always satisfiable and in case of a negative, $NO$ instance we see failure with some constant probability leading to a fraction of the clauses always being unsatisfied. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Basics}
 We describe a verifier such that for any yes instance of $X$, there exists a certificate that the verifier will accept, and for any no instance of $X$, no such certificate exists. The running time of the verifier (and hence the size of the certificate) must be polynomial. This is formally represented as a function $V: \{0,1\}* \times \{0,1\}* \rightarrow \{0,1\}$ where, $V(T,\pi) = 1$ implies $\pi$ is the proof of assertion $T$, making it a proof. Classical verifiers/algorithms are enhanced by giving them access to random strings and oracles. Oracles will be functions $O: Q \rightarrow A$ with $Q$ being a countable set and $A$ being a finite set. In the query model, you are given
 black-box access to some function $f$. You have to answer some question about $f$. 
@@ -35,8 +37,25 @@ The soundness error can, as usual, be reduced by repetition. For exponentially-s
 That is, for every constant $\epsilon, \delta > 0$, there is a poly-size PCP for NP that reads just three random bits and test their XOR. Its completeness is $1 - \epsilon$ and its soundness is $1/2 + \epsilon$. This result has imperfect completeness. However, if one is willing to allow an adaptive three-bit-querying verifier, i.e. the verifier $V$ does not have to pick the three bits in advance but can base what bit it reads next on what it’s seen so far, then one can get completeness 1. That is, $NP = PCP_{1,1/2+\delta}[O(log n), O(1)]$. This result is due to Guruswami, Lewin,
 Sudan, and Trevisan [REFERENCE].
 
-\section{PCPs and Approximations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Formulations of PCP}
+The PCP theorem has many applications, in particular to hardness of approximation. We discuss three equivalent formulations of the theorem. All three state that a certain problem is NP-complete.
+
+\subsection{Proof Checking Version}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{PCPs and Approximations}
 The PCP theorem gives a PCP for 3SAT with $q(n) = O(\log n)$ and $r(n) = O(1)$. That means that given a 3CNF, we can come construct a new CNF of length $O(2^{q(n)}) = n^{O(1)}$ using the construction outlined in the preceding paragraph such that (i) if the original 3CNF formula is satisfiable, so is the new one, (ii) otherwise, at most $1-\epsilon$ fraction of the clauses can ever be satisfied in the new CNF. That gives a hardness of approximation result for 3SAT. 
 
 Using Raz's parallel repetition theorem, Håstad obtained a construct in which in case (ii), at most $7/8+\epsilon$ of the clauses can be satisfied, thus obtaining an optimal inapproximability result. (It's optimal since a random assignment satisfies $7/8$ of the clauses; this algorithm can be derandomized using the method of conditional expectations.)
+
+Given graph $G = (V,E)$ and integer $k$, find a coloring $A : V \rightarrow \{1,...,k\}$ that maximizes the number of satisfied edges, where an edge $e = \{u,v\}$ is said to be satisfied if $A(u) \neq A(v)$. We know that this maximization problem is NP-complete but is it hard to compute a coloring where atleast $0.999k$ edges are satisfied.
+
+\textbf{Definition 3 (Constraint graph, coloring)}
+
+\textbf{Constraint Graph:} \textit{A constraint graph G is a tuple $\langle V, E, \sigma, C \rangle$}, where $(V,E)$ is an undirected graph (allowing multiple edges and self-loops), $\sigma$ is a finite set called the alphabet of G, and C is a collection of constraints, $\langle c_e : e \in E \rangle$, where each $c_e$ is a function from $\sigma \times \sigma$ to $\{0,1\}$.
+
+\textbf{Coloring and Satisfaction:} \textit{A coloring of G is a function $A : V \rightarrow \sigma$. We say that the coloring A satisfies an edge $e = \{u,v\}$, if $c_e(A(u),A(v)) = 1$. We say that the coloring A satisfies G, if A satisfes all edges of G. If there is a coloring that satisfies G, then we say that g is satisfiable. We say that G is $\epsilon-far$ from satisfiable if every coloring leaves at least a fraction $\epsilon$ of the edges of G unsatisfied. Let $$UNSAT(G) = \max \{\epsilon : G is \epsilon -satisfiable\} = \min_A \frac{\arrowvert\{e : A does not satisfy e\}\arrowvert}{\arrowvert E \arrowvert}$$ We use $G_K$ to denote the set of constraint graphs with an alphabet size of K.}
