@@ -43,8 +43,29 @@ Sudan, and Trevisan [REFERENCE].
 The PCP theorem has many applications, in particular to hardness of approximation. We discuss three equivalent formulations of the theorem. All three state that a certain problem is NP-complete.
 
 \subsection{Proof Checking Version}
+All NP languages have proofs that can be verified very efficiently as only a constant number of symbols of the proof need to be evaluated given that we use a probabilistic decision process which gives errors with a small probability. Given the definition of the PCP verifier and the associated complexity class, the PCP theorem states that alllanguages in NP have very efficient verifiers i.e. those which only read a constant number of bits from the proof.
 
+\textbf{Theorem 3} \textit{Given the specification of a verifier $V$ and $x \in \{0, 1\}^*$ we let $\omega (V_x)$ be the maximum acceptance probability of $V$, when its input is $x$ and the maximum is taken over all possible proofs $\pi \in \epsilon^*$. The inclusion $NP \subseteq PCP(O(\log n))$, $O(1))$ holds. Equivalently, given a $((O(\log n), O(1))_{\{0,1\}}$-PCP verifier V, the problem of deciding between $\omega(V_x) = 1$ and $\omega(V_x) \leq 1/2$ is NP-hard.}
 
+\subsection{Multiplayer Games}
+The discovery of the surprising power of randomization, interaction, and multiple provers eventually led to the proof of the PCP theorem. Here we give a statement of the theorem in the language of multiplayer games, which provide a convenient framework in which to express “scaled-down” variants (corresponding to interactions involving a single round of question/answers, and a polynomial number of possible questions) of the MIP = NEXP result.
+
+\textbf{Definition 3} \textit{Let q be an integer. A q-player game G is specified by the following:
+\begin{enumerate}
+    \item Finite question sets $Q_1,..., Q_q$,
+    \item A probability distribution $\pi$ on $Q_1 \times ... Q_q$,
+    \item Finite answer sets $A_1, . . . , A_q$,
+    \item A decision predicate $V : (A_1 \times ... \times A_q) \times (Q_1 \times ... \times Q_q) \rightarrow \{0, 1\}$.
+\end{enumerate}
+Given a game G, the value $\omega(G)$ of G is defined as the maximum success probability of players $P_1, ... , P_q$ in the game, where player $P_j$ is simply a deterministic function $f_j: Q_j \rightarrow A_j$. Formally,
+$$\omega(G) = \max_{f_j:Q_j \rightarrow A_j} \sum_{(q_1,...,q_q) \in Q_1 \times ... \times Q_q} \pi (q_1, ..., q_q) V (f_1(q_1), ... , f_q(q_q); q_1, ..., q_q)$$}
+
+Giving us another formulation of the PCP theorem as follows:
+
+\textbf{Theorem 4} \textit{For any $L \in NP$ there exists a polynomial-time mapping $x \in \{0, 1\}^* \rightarrow G_x$ from strings x to q-player games $G_x$, where $q = O(1)$, such that $x \in L \rightarrow \omega(G_x) = 1$ and $x \notin L \rightarrow \omega (G_x) \leq 1/2$. Equivalently, there exists a constant q such that the problem of deciding whether, given a q-player game G, $\omega (G) = 1$ or $\omega(G) \leq 1/2$, is NP-hard}
+
+\subsection{Constraint Satisfaction Problems}
+Our third formulation of the PCP theorem uses the language of constraint satisfaction problems, and is the most useful for applications to hardness of approximation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{PCPs and Approximations}
