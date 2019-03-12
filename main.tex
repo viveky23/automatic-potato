@@ -20,6 +20,8 @@
 
 \usepackage[round, numbers,authoryear]{natbib}
 \usepackage{color}
+\usepackage{bm}
+
 \usepackage[dvipsnames]{xcolor}
 \usepackage{enumitem}
 \usepackage{amsfonts}
@@ -65,24 +67,24 @@
 
     %\chapter*{Dedication}
     %\chapter*{Declaration}
-    \chapter*{Acknowledgements}
-    \textcolor{red}{It is usual, but not compulsory, to thank those who have been of particular help to you in completing the thesis.}
+    %\chapter*{Acknowledgements}
+    %\textcolor{red}{It is usual, but not compulsory, to thank those who have been of particular help to you in completing the thesis.}
 
 % Table of contents, list of figures, and list of tables
     {\hypersetup{linkcolor=black}
         \tableofcontents
-        \listoffigures
-        \listoftables
+        %\listoffigures
+        %\listoftables
     }
         {\hypersetup{linkcolor=mycolor}}
      
 % Theory
-    \part{Dinur's Proof}\label{prt:theory}
+    \part{Probabilistically Checkable Proofs}\label{prt:theory}
     
     \chapter{Preliminaries}
     \input{Dinur_proof/Preliminaries.tex}
     
-    \chapter{Probabilistically checkable proofs}
+    \chapter{Statement of Proof}
     \input{Dinur_proof/Probabilistically.tex}
 
 %Papers

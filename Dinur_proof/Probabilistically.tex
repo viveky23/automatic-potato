@@ -1,9 +1,11 @@
-\textcolor{red}{\textbf{Abstract:} }
+\textcolor{red}{\textbf{Abstract:} The PCP Theorem states that every decision problem in the NP complexity class has probabilistically checkable proofs (proofs that can be checked by a randomized algorithm) of constant query complexity and logarithmic randomness complexity. The PCP Theorem gave a new definition of NP and provided a new starting point for reductions to show hardness of approximation}
+
+An NP-verifier gets a theorem and a proof string and must be able to tell whether the proof string is a true proof of the theorem. For example given the language $\bm{A}$ of graphs that have a valid 3-coloring, if a theorem is in $\bm{A}$ then there will be a proof string that is accepted by the verifier and if a theorem is not in $\bm{A}$ then no proof should be able to convince the verifier otherwise. A PCP-verifier adds more power to the verifier in the form of randomness. In the PCP-verifier in addition to reading the input and the proof the verifier also reads an additional random string, in return for the fact we give the verifier randomness we expect that it does not read the entire proof and just reads a small number of bits and the verifier gain accepts or rejects.
 
 In order to verify some property using PCP, the prover needs to present a proof $P$ which is \textbf{easily testable}. Testing can be done by querying the proof at $q(n)$ points where $q(n)$ is a small number. PCP needs to satisfy the following properties: 
 \begin{enumerate}[nolistsep]
-    \item If the property actually holds, the verifier should always (or almost always) accept.
-    \item If the property doesn't hold, then the verifier would notice with some constant probability.
+    \item If the property actually holds, the verifier should always (or almost always) accept. With high probability the verifier will say $YES$ when it is supposed to say $YES$.
+    \item If the property doesn't hold, then the verifier would notice with some constant probability. For any theorem that is incorrect for every single proof the probability that the verifier accepts $Pr_{\tau}[V^{\pi}\,accepts.] < 1/2$. If we just repeat the verifier on k independent random strings themn the probability of not detecting a problem goes down to $2^-k$ for $k$ random strings.
 \end{enumerate}
 
 To account for lengthy proofs, as the verifier will only be looking at a small number- $q(n)$ points, randomness in choosing points is encouraged so as to make it harder to fool the verifier. The verifier chooses $r(n)$ random coins, and based on them queries the proof at $q(n)$ points. Then she applies a test which always succeeds in YES instances (the property holds), but fails with constant probability (over the coin tosses) in NO instances (the property doesn't hold). Since there are $r(n)$ coins, there are $2^{r(n)}$ different outcomes for the coins, and so the verifier in total queries the proof in at most $2^{r(n)}q(n)$ different places.
@@ -66,17 +68,39 @@ Giving us another formulation of the PCP theorem as follows:
 
 \subsection{Constraint Satisfaction Problems}
 Our third formulation of the PCP theorem uses the language of constraint satisfaction problems, and is the most useful for applications to hardness of approximation.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{PCPs and Approximations}
+\textbf{Definition 4} \textit{Let $m, q : \mathbb{N} \rightarrow \mathbb{N}$ and let $\Sigma = (\Sigma_n)$ be a sequence of finite sets. A $(m, q)_{\Sigma}$-CSP $\phi$ is a collection of m constraints $C_j$, each acting on at most q out of a total of n variables. If $m = poly(n)$ and $\Sigma = \{0, 1\}$ we refer to $(m, q)_{\Sigma}$-CSPs as q-CSPs. Given a CSP $\phi$, its value $\omega(\phi)$ is the maximum fraction of constraints that an assignment can satisfy:
+$$\omega(\phi) = \max_{x_1,...,x_n} \frac{\#\{j : C_j\,is\,satisfied\,by\,(x_i)\}}{m}$$}
+
+The Cook-Levin theorem states that 3-SAT is NP-complete. The PCP theorem shows that an a priori much easier, approximation version of this problem remains just as hard:
+
+\textbf{Theorem 5} \textit{. For any $L \in NP$ there exists a polynomial-time mapping $x \in \{0, 1\}^*\rightarrow \phi_x$ from strings x to $(m, q)$-CSPs $\phi_x$, where $m = poly(n)$ and $q = O(1)$, such that $x \in L \rightarrow \omega(\phi_x) = 1$ and $x \notin L \rightarrow \omega(\phi_x) \leq 1/2$. Equivalently, there exists a constant
+q such that given a q-CSP $\phi$ the problem of deciding between $\omega(\phi) = 1$ and $\omega(\phi) \leq 1/2$ is NP-complete.}
+
 The PCP theorem gives a PCP for 3SAT with $q(n) = O(\log n)$ and $r(n) = O(1)$. That means that given a 3CNF, we can come construct a new CNF of length $O(2^{q(n)}) = n^{O(1)}$ using the construction outlined in the preceding paragraph such that (i) if the original 3CNF formula is satisfiable, so is the new one, (ii) otherwise, at most $1-\epsilon$ fraction of the clauses can ever be satisfied in the new CNF. That gives a hardness of approximation result for 3SAT. 
 
 Using Raz's parallel repetition theorem, Håstad obtained a construct in which in case (ii), at most $7/8+\epsilon$ of the clauses can be satisfied, thus obtaining an optimal inapproximability result. (It's optimal since a random assignment satisfies $7/8$ of the clauses; this algorithm can be derandomized using the method of conditional expectations.)
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{PCPs and Approximations}
 Given graph $G = (V,E)$ and integer $k$, find a coloring $A : V \rightarrow \{1,...,k\}$ that maximizes the number of satisfied edges, where an edge $e = \{u,v\}$ is said to be satisfied if $A(u) \neq A(v)$. We know that this maximization problem is NP-complete but is it hard to compute a coloring where atleast $0.999k$ edges are satisfied.
 
 \textbf{Definition 3 (Constraint graph, coloring)}
 
-\textbf{Constraint Graph:} \textit{A constraint graph G is a tuple $\langle V, E, \sigma, C \rangle$}, where $(V,E)$ is an undirected graph (allowing multiple edges and self-loops), $\sigma$ is a finite set called the alphabet of G, and C is a collection of constraints, $\langle c_e : e \in E \rangle$, where each $c_e$ is a function from $\sigma \times \sigma$ to $\{0,1\}$.
+\textbf{Constraint Graph:} \textit{A constraint graph G is a tuple $\langle V, E, \sigma, C \rangle$, where $(V,E)$ is an undirected graph (allowing multiple edges and self-loops), $\sigma$ is a finite set called the alphabet of G, and C is a collection of constraints, $\langle c_e : e \in E \rangle$, where each $c_e$ is a function from $\sigma \times \sigma$ to $\{0,1\}$.}
 
-\textbf{Coloring and Satisfaction:} \textit{A coloring of G is a function $A : V \rightarrow \sigma$. We say that the coloring A satisfies an edge $e = \{u,v\}$, if $c_e(A(u),A(v)) = 1$. We say that the coloring A satisfies G, if A satisfes all edges of G. If there is a coloring that satisfies G, then we say that g is satisfiable. We say that G is $\epsilon-far$ from satisfiable if every coloring leaves at least a fraction $\epsilon$ of the edges of G unsatisfied. Let $$UNSAT(G) = \max \{\epsilon : G is \epsilon -satisfiable\} = \min_A \frac{\arrowvert\{e : A does not satisfy e\}\arrowvert}{\arrowvert E \arrowvert}$$ We use $G_K$ to denote the set of constraint graphs with an alphabet size of K.}
+\textbf{Coloring and Satisfaction:} \textit{A coloring of G is a function $A : V \rightarrow \Sigma$. We say that the coloring A satisfies an edge $e = \{u,v\}$, if $c_e(A(u),A(v)) = 1$. We say that the coloring A satisfies G, if A satisfes all edges of G. If there is a coloring that satisfies G, then we say that g is satisfiable. We say that G is $\epsilon-far$ from satisfiable if every coloring leaves at least a fraction $\epsilon$ of the edges of G unsatisfied. Let $$UNSAT(G) = \max \{\epsilon : G is \epsilon -satisfiable\} = \min_A \frac{\arrowvert\{e : A\,does\,not\,satisfy\,e\}\arrowvert}{\arrowvert E \arrowvert}$$ We use $G_K$ to denote the set of constraint graphs with an alphabet size of K.}
+
+A natural 3-coloring verifier reads the coloring $c(v_1) = 1, c(v_2)=2,\ldots$ and then checks edge-by-edge that the endpoints have different colors. Now, the PCP-verifier for the same can be to select a random edge and check if those two endpoints have a 3-coloring and accept/reject the proof accordingly. However this fails because a 3-colorable graph could have an almost correct coloring with very few monochromatic edges and then we won't be rejecting such graphs with $Pr_{\tau} < 1/2$ and to drive the probability below $1/2$ we would need to read an order on n edges and would not be a constant number of bits.
+
+A graph is robust if  every almost coloring is "correctable" into a perfect coloring with an almost coloring satisfying $1-O(1)$ fraction of the edges. Let $val(G)$ be the fraction of edges satisfied by a 3-coloring. Then a robust graph either has a perfect coloring else doesn't have an "almost-perfect" coloring. If we were operating with robust graphs then the previous verifier would be enough.
+
+To construct a PCP verifier, it suffices to have an efficient "robustificaton" algorithm that takes every input graph $G$ into a robust output graph $H = robust(G)$, such that every $H$ is 3-colorable if and only if $G$ is. 
+\begin{enumerate}
+    \item If $G$ is 3-colorable, then so is $H$
+    \item If $G$ is not 3-colorable, then neither is $H$; furthermore, $H$ has no almost-colorings.
+\end{enumerate} 
+
+Afterwards, we can just run the naive verifier which will either accept the proof of the theorem or as the graph H will not be robust and have at least $\epsilon$ bugs, the naive verifier will hit them with a good probability and not accept the proof.
+
